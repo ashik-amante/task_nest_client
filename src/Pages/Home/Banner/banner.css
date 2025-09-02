@@ -1,0 +1,22 @@
+.cover{
+    background-image: url('../../../assets/image/banner1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 600px;
+    background-attachment: fixed;
+    position: relative;
+    z-index: 0;
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* কালো শেড ৫০% */
+  z-index: 1;
+}
+
+.cover > * {
+  position: relative;
+  z-index: 1; /* কন্টেন্ট উপরে */
+}
