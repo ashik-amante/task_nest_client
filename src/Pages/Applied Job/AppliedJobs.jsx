@@ -1,18 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Button from '../../Components/Button/Button';
-import useAuth from '../../Hooks/useAuth';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
 import formateDate from '../../Hooks/useFormateDate';
+import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
-import Swal from 'sweetalert2'
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAuth from '../../Hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
 import { FaTrash } from 'react-icons/fa';
-import { RxUpdate } from "react-icons/rx";
-import LoadingSpinner from '../../Components/Shareed/LoadingSpinner';
+import Button from '../../Components/Button/Button';
+import { Link } from 'react-router-dom';
 
-const MypostedJobs = () => {
-    const { user,loading } = useAuth()
+const AppliedJobs = () => {
+     const { user,loading } = useAuth()
     const axiosSecure = useAxiosSecure()
 
     const { data: jobs = [], refetch,isLoading} = useQuery({
@@ -58,7 +56,8 @@ const MypostedJobs = () => {
     if(loading || isLoading) return <LoadingSpinner></LoadingSpinner>
     return (
         <div>
-            <h1 className='text-4xl text-center mt-10 mb-10'>My Posted Jobs </h1>
+            <h1 className='text-4xl text-center mt-10 mb-10'>Applied Jobs </h1>
+            <h1 className='text-4xl text-red-500 text-center  mb-10'>reminder : Have to apply Filter system  </h1>
             <div className="overflow-x-auto">
                 <table className="table table-zebra ">
                     {/* head */}
@@ -66,10 +65,10 @@ const MypostedJobs = () => {
                         <tr>
                             <th>No.</th>
                             <th>Job Title</th>
-                            <th>Job Posting Date</th>
+                            <th>Applied Date</th>
                             <th>Application Deadline</th>
                             <th>Salary range</th>
-                            <th>Update</th>
+                            
                             <th>Action</th>
                             <th>View Details</th>
                         </tr>
@@ -83,20 +82,13 @@ const MypostedJobs = () => {
                                 <td>{formateDate(job.deadline)}</td>
                                 <td> $ {job.minPrice} - {job.maxPrice} </td>
 
-                                {/* Update  */}
-                                <td>
-                                    <Link to={`/update-job/${job._id}`}  className='text-xl text-yellow-500'>
-                                        <RxUpdate />
-                                    </Link >
-                                </td>
+                             
                                 {/* delete */}
                                 <td>
                                     <button className='text-xl text-red-500' onClick={() => handleDelete(job._id)}>
                                         <FaTrash></FaTrash>
                                     </button>
                                 </td>
-
-
                                 <td>
                                     <Link to={`/job-details/${job._id}`}>
                                         <Button text='Details'></Button>
@@ -113,4 +105,4 @@ const MypostedJobs = () => {
     );
 };
 
-export default MypostedJobs;
+export default AppliedJobs;

@@ -6,7 +6,7 @@ import formateDate from '../../Hooks/useFormateDate';
 
 const AllJobs = () => {
     const [jobs,] = useAllJob()
-    const {title,buyerEmail,buyerName,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id} = jobs
+    // const {title,buyerEmail,buyerName,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id} = jobs
     return (
         <div>
             <h1 className='text-4xl text-center mt-10 mb-10'>All Jobs </h1>
@@ -30,8 +30,8 @@ const AllJobs = () => {
                             jobs.map((job, index) => <tr>
                                 <th>{index + 1}</th>
                                 <td>{job.title}</td>
-                                <td>{formateDate(postingDate)}</td>
-                                <td>{formateDate(deadline)}</td>
+                                <td>{formateDate(job.postingDate)}</td>
+                                <td>{formateDate(job.deadline)}</td>
                                 <td>$ {job.minPrice} - {job.maxPrice}</td>
                                 <td>
                                     <Link to={`/job-details/${job.id}`}>

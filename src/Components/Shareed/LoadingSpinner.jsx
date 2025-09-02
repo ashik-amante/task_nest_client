@@ -1,17 +1,12 @@
-import React from 'react';
+import {PuffLoader} from 'react-spinners'
 
 const LoadingSpinner = () => {
     return (
-        <div>
-            render(<Puff
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                ariaLabel="puff-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-            />)
+        <div className='flex flex-col items-center justify-center min-h-screen'>
+            <PuffLoader 
+            size='80px'
+            speedMultiplier={2}
+            color='#1cab19' />
         </div>
     );
 };

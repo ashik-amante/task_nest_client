@@ -6,7 +6,7 @@ const Navbar = () => {
     const { user, logOut } = useAuth()
     // console.log(user);
     const [theme, setTheme] = useState('light')
-    console.log(theme);
+    // console.log(theme);
 
     useEffect(() => {
         const savetheme = localStorage.getItem('theme')
@@ -24,7 +24,7 @@ const Navbar = () => {
         logOut()
     }
     const handleToggle = (event) => {
-        console.log(event.target.checked);
+        // console.log(event.target.checked);
         if (event.target.checked) {
             setTheme('dark')
         } else {
@@ -39,7 +39,7 @@ const Navbar = () => {
         {
             user && <>
                 <li><NavLink to='/my-posted-jobs'>My Posted Job</NavLink></li>
-                <li><NavLink to='/applied-job'>Applied Job</NavLink></li>
+                <li><NavLink to='/applied-jobs'>Applied Job</NavLink></li>
                 <li><NavLink to='/add-job'>Add A Job</NavLink></li>
                 <li><NavLink to='/my-blog'>My Blog</NavLink></li>
             </>

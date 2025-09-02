@@ -10,6 +10,9 @@ import JobDetails from "../Pages/Home/Job details/JobDetails";
 import AllJobs from "../Pages/All Job Page/AllJobs";
 import AddJob from "../Pages/Add A Job/AddJob";
 import MypostedJobs from "../Pages/My posted jobs/MypostedJobs";
+import UpdateJob from "../Pages/Update job/UpdateJob";
+import axios from "axios";
+import AppliedJobs from "../Pages/Applied Job/AppliedJobs";
 
 
 const router = createBrowserRouter([
@@ -45,7 +48,24 @@ const router = createBrowserRouter([
             {
               path: '/my-posted-jobs',
               element:<MypostedJobs></MypostedJobs>
-            }
+            },
+            {
+              path: '/update-job/:id',
+              element: <UpdateJob></UpdateJob>,
+              loader:async ({params})=> {
+                const res = await axios.get(`http://localhost:5000/jobs/update/${params.id}`)
+                return res.data
+              },
+            },
+            {
+              path: '/applied-jobs',
+              element: <AppliedJobs></AppliedJobs>,
+              // loader:async ({params})=> {
+              //   const res = await axios.get(`http://localhost:5000/jobs/update/${params.email}`)
+              //   return res.data
+              // },
+            },
+            
         ]
     }
 ])

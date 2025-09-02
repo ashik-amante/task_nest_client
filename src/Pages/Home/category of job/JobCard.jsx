@@ -4,7 +4,7 @@ import formateDate from '../../../Hooks/useFormateDate';
 
 const JobCard = ({job}) => {
     const {title,buyerEmail,buyerName,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id} = job
-    console.log('job card',job);
+    // console.log('job card',job);
     return (
         <div>
             <div className="card bg-base-100 h-96 shadow-xl">
@@ -17,7 +17,7 @@ const JobCard = ({job}) => {
                 <div className="card-body">
                     {/* name image */}
                     <h2 className="card-title">
-                        <h1>{buyerName}</h1>
+                        <p>{buyerName}</p>
                         <img className='w-10 h-10 ml-2 rounded-full' src="https://i.ibb.co.com/nqkfNdbh/photo.jpg" alt="" />
 
                     </h2>

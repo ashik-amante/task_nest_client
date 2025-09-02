@@ -15,7 +15,7 @@ const Category = () => {
     const graphic = jobs.filter(item => item.category === 'Graphics & Design')
     const food = jobs.filter(item => item.category === 'Food Services')
 
-    console.log(programming,'category tab');
+
     return (
         <div >
             <h1 className='text-3xl text-center p-6
@@ -44,7 +44,7 @@ const Category = () => {
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-10'>
                             {
                                 programming.map(job => <JobCard
-                                    job={job} key={job.id}
+                                    job={job} key={job._id}
                                 ></JobCard>)
                             }
                         </div>
@@ -54,7 +54,7 @@ const Category = () => {
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-10'>
                             {
                                 digital.map(job => <JobCard
-                                    job={job} key={job.id}
+                                    job={job} key={job._id}
                                 ></JobCard>)
                             }
                         </div>
@@ -64,7 +64,7 @@ const Category = () => {
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-10'>
                             {
                                 graphic.map(job => <JobCard
-                                    job={job} key={job.id}
+                                    job={job} key={job._id}
                                 ></JobCard>)
                             }
                         </div>
@@ -74,7 +74,7 @@ const Category = () => {
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-10'>
                             {
                                 food.map(job => <JobCard
-                                    job={job} key={job.id}
+                                    job={job} key={job._id}
                                 ></JobCard>)
                             }
                         </div>

@@ -1,46 +1,36 @@
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import Button from '../../Components/Button/Button';
+import DatePicker from 'react-datepicker';
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Controller, useForm } from "react-hook-form"
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useAuth from "../../Hooks/useAuth";
-import Button from "../../Components/Button/Button";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-
-const AddJob = () => {
+const UpdateJob = () => {
     const axiosSecure = useAxiosSecure()
-    const {user} = useAuth()
+    const { user } = useAuth()
     const navigate = useNavigate()
-    console.log(user);
+    const prevJob = useLoaderData()
+    // console.log(prevJob);
+    // console.log(user);
 
     const { register, handleSubmit, control, formState: { errors } } = useForm()
 
     const onSubmit = async (data) => {
         console.log(data)
-        const jobData = {
-            title: data.title,
-            buyerEmail: user?.email,
-            buyerName: user?.displayName,
-            postingDate: new Date(),
-            deadline: data.deadline,
-            category: data.category,
-            jobType:data.jobType,
-            minPrice: parseInt(data.minPrice),
-            maxPrice: parseInt(data.maxPrice),
-            description:data.description,
-            location:data.location,
-            workMode: data.workMode,
-            totalApplicant: parseInt('0'),
-            bannnerImage: ''
+        const updatedJob = {
+            ...data
         }
+        // delete updatedJob._id
+        // const {_id, ...finalJobData} = updatedJob
         try {
-            const res = await axiosSecure.post('/jobs', jobData)
+            const res = await axiosSecure.patch(`/jobs/update/${prevJob._id}`, updatedJob)
             console.log(res.data);
-            toast.success('Job Added Successfully')
+            toast.success('Job Updated Successfully')
             navigate('/my-posted-jobs')
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
@@ -48,8 +38,8 @@ const AddJob = () => {
     return (
         <div className='flex justify-center items-center min-h-[calc(100vh-306px)] my-12'>
             <section className=' p-2 md:p-6 mx-auto bg-white rounded-md shadow-md '>
-                <h2 className='text-lg font-semibold text-gray-700 capitalize '>
-                    Post a Job
+                <h2 className='text-2xl text-center mb-10 font-semibold text-gray-700 capitalize '>
+                    Update Job
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,6 +51,7 @@ const AddJob = () => {
                             <input
                                 {...register("title", { required: true })}
                                 id='title'
+                                defaultValue={prevJob.title}
                                 name='title'
                                 type='text'
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
@@ -77,6 +68,7 @@ const AddJob = () => {
                                 defaultValue={user?.email}
                                 disabled
                                 id='emailAddress'
+                                
                                 type='email'
                                 name='email'
 
@@ -90,7 +82,7 @@ const AddJob = () => {
                             <Controller
                                 {...register('deadline')}
                                 name="deadline"
-                                defaultValue={new Date()}
+                                 defaultValue={new Date(prevJob.deadline)}
                                 control={control}
                                 render={({ field }) => (
                                     <DatePicker
@@ -113,6 +105,7 @@ const AddJob = () => {
                                 {...register("category", { required: true })}
                                 name='category'
                                 id='category'
+                                defaultValue={prevJob.category}
                                 className='border p-2 rounded-md'
                             >
                                 <option value='Web Development'>Web Development</option>
@@ -130,6 +123,7 @@ const AddJob = () => {
                                 {...register("jobType", { required: true })}
                                 name='jobType'
                                 id='jobType'
+                                defaultValue={prevJob.jobType}
                                 className='border p-2 rounded-md'
                             >
                                 <option value='Full Time'>Full Time</option>
@@ -145,6 +139,7 @@ const AddJob = () => {
                             <select
                                 {...register("workMode", { required: true })}
                                 name='workMode'
+                                defaultValue={prevJob.workMode}
                                 id='workMode'
                                 className='border p-2 rounded-md'
                             >
@@ -161,6 +156,7 @@ const AddJob = () => {
                                 {...register("minPrice", { required: true })}
                                 id='minPrice'
                                 name='minPrice'
+                                defaultValue={prevJob.minPrice}
                                 type='number'
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />
@@ -174,6 +170,7 @@ const AddJob = () => {
                                 {...register("maxPrice", { required: true })}
                                 id='maxPrice'
                                 name='maxPrice'
+                                 defaultValue={prevJob.maxPrice}
                                 type='number'
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />
@@ -186,6 +183,7 @@ const AddJob = () => {
                                 {...register("location", { required: true })}
                                 id='location'
                                 name='location'
+                                 defaultValue={prevJob.location}
                                 type='text'
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />
@@ -199,19 +197,20 @@ const AddJob = () => {
                             {...register("description", { required: true })}
                             className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             name='description'
+                             defaultValue={prevJob.description}
                             id='description'
                         ></textarea>
                     </div>
                     <div className='  mt-6'>
                         {/* <button type="submit" className='px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600'>
-                            Add Job
-                        </button> */}
-                        <Button  text='Add to Job'></Button>
+                                    Add Job
+                                </button> */}
+                        <Button text='Update Job'></Button>
                     </div>
                 </form>
             </section>
         </div>
-    )
-}
+    );
+};
 
-export default AddJob
+export default UpdateJob;
