@@ -35,6 +35,7 @@ const Navbar = () => {
 
     const navItems = <>
         <li><NavLink>Home</NavLink></li>
+       <li><NavLink to='/all-jobs'>All Jobs</NavLink></li>
         
         {
             user && <>
@@ -45,7 +46,7 @@ const Navbar = () => {
             </>
         }
 
-        <li><NavLink to='/all-jobs'>All Jobs</NavLink></li>
+       
 
 
     </>

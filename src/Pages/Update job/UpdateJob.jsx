@@ -108,8 +108,8 @@ const UpdateJob = () => {
                                 defaultValue={prevJob.category}
                                 className='border p-2 rounded-md'
                             >
-                                <option value='Web Development'>Web Development</option>
-                                <option value='Graphics Design'>Graphics Design</option>
+                                <option value='Programming & Tech'>Programming & Tech</option>
+                                <option value='Graphics & Design'>Graphics & Design</option>
                                 <option value='Digital Marketing'>Digital Marketing</option>
                                 <option value='Food Services'>Food Services</option>
                             </select>

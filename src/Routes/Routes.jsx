@@ -13,6 +13,7 @@ import MypostedJobs from "../Pages/My posted jobs/MypostedJobs";
 import UpdateJob from "../Pages/Update job/UpdateJob";
 import axios from "axios";
 import AppliedJobs from "../Pages/Applied Job/AppliedJobs";
+import PopUpmodal from "../Components/Modal/PopUpmodal";
 
 
 const router = createBrowserRouter([
@@ -35,7 +36,10 @@ const router = createBrowserRouter([
             {
               path:'/job-details/:id',
               element: <JobDetails></JobDetails>,
-              // loader: ({params})=> fetch(`job.json/${params.id}`)
+              loader: async ({params})=> {
+                const res = await axios.get(`http://localhost:5000/jobs/update/${params.id}`)
+                return res.data
+              }
             },
             {
               path:'/all-jobs',
@@ -65,6 +69,10 @@ const router = createBrowserRouter([
               //   return res.data
               // },
             },
+            {
+              path: '/popup',
+              element: <PopUpmodal></PopUpmodal>
+            }
             
         ]
     }

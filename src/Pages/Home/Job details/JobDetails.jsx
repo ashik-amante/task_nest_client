@@ -1,44 +1,64 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useLoaderData, } from 'react-router-dom';
 import Button from '../../../Components/Button/Button';
-import { FaCalendar } from 'react-icons/fa';
+import { FaCalendar, FaDollarSign, FaUsers } from 'react-icons/fa';
+import formateDate from '../../../Hooks/useFormateDate';
+import ApplyForJobModal from '../../../Components/Modal/ApplyForJobModal';
+import { useState } from 'react';
+import { FcExpired } from 'react-icons/fc';
+import { MdTitle } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
+
+import { FaLocationDot } from "react-icons/fa6";
+
 
 const JobDetails = () => {
-    const job = useParams()
+    const [isOpen, setIsOpen] = useState(false)
+    const job = useLoaderData()
+    const { title, buyerEmail, buyerName, deadline, category, postingDate, minPrice, maxPrice, description, location, totalApplicant, _id } = job
 
-    console.log(job, 'from details page');
+    const closeModal = () => {
+        setIsOpen(false)
+    }
+
+    // console.log(job, 'from details page');
     return (
-        <div className='flex gap-10 bg-gray-200 text-black'>
+        <div className='flex flex-col gap- md:flex-row md:gap-10 bg-gray-200 text-black'>
 
-            <div className='flex  items-center w-[60%] border-2 my-12'>
-                <section className=' p-2 md:p-6 w-full h-full mx-auto bg-white rounded-md shadow-md '>
+            <div className='flex  items-center p-4  md:w-[60%] border-2 my-12'>
+                <section className=' p-2 md:p-6 w-full h-full mx-auto bg-white rounded-md shadow-md space-y-4 '>
                     <h2 className='text-2xl text-center mb-10 font-semibold text-gray-700 capitalize '>
                         Job Details
                     </h2>
 
                     <div className='flex justify-between mb-3'>
-                        <p>Posted By: </p>
-                        <img className='h-10 w-10' src="" alt="image" />
+                        <div className='space-y-1'>
+                            <p className='text-center font-semibold'>Posted By:</p>
+                            <p>Email: {buyerEmail} </p>
+                            <p>Name: {buyerName} </p>
+                        </div>
+                        <img className='h-16 w-16 rounded-full' src="https://i.ibb.co.com/YFHSfFGg/6314122681770947455-removebg.png" alt="image" />
                     </div>
                     <div className="border-2 border-gray-400 "></div>
 
-                    <h1>Description</h1>
-                    <p>[dotenv@17.2.1] injecting env (2) from .env -- tip: 📡 auto-backup env with Radar: https://dotenvx.com/radar
-                        Ser running on port 5000
-                        [nodemon] restarting due to changes</p>
+                    <div className='space-y-1'>
+                        <p className='text-center font-semibold'>Job Description:</p>
+                        <p>{description}</p>
+                    </div>
 
-
-                    <h2>Skill Needed</h2>
-                    <li>ttem11</li>
-                    <li>ttem21</li>
-                    <li>ttem31</li>
-                    <li>ttem41</li>
-                    <li>ttem51</li>
+                    <div className='space-y-'>
+                        <p className='text-center font-semibold'>Skill Needed:</p>
+                        <li>ttem11</li>
+                        <li>ttem21</li>
+                        <li>ttem31</li>
+                        <li>ttem41</li>
+                        <li>ttem51</li>
+                    </div>
 
                 </section>
             </div>
             {/* Right side  */}
-            <div className='flex justify-center w-[40%] items-center min-h-screen my-12'>
+            <div className='flex justify-center md:w-[40%] items-center min-h-screen my-12'>
                 <section className=' p-2 md:p-6 w-full min-h-screen mx-auto bg-white rounded-md shadow-md '>
                     <h2 className='text-2xl text-center mb-10 font-semibold text-gray-700 capitalize '>
                         Job Overview
@@ -47,58 +67,68 @@ const JobDetails = () => {
                     <div className='space-y-8 px-10  '>
 
                         <div className='flex gap-10'>
+                            <span className='bg-green-100 p-3 rounded text-green-600'><MdTitle /></span>
+                            <div>
+                                <h1 className='font-semibold'>Job Title:</h1>
+                                <h1 className='text-gray-600'>{title}</h1>
+                            </div>
+                        </div>
+                        <div className='flex gap-10'>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><BiCategory />
+                            </span>
+                            <div>
+                                <h1 className='font-semibold'>Category</h1>
+                                <h1 className='text-gray-600'>{category}</h1>
+                            </div>
+                        </div>    
+                        <div className='flex gap-10'>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaDollarSign></FaDollarSign></span>
+                            <div>
+                                <h1 className='font-semibold'>Salary Range:</h1>
+                                <h1 className='text-gray-600'> $ {minPrice} - {maxPrice}</h1>
+                            </div>
+                        </div>
+                        <div className='flex gap-10'>
                             <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
                             <div>
                                 <h1 className='font-semibold'>Date Posted:</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
+                                <h1 className='text-gray-600'>{formateDate(postingDate)}</h1>
                             </div>
                         </div>
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FcExpired></FcExpired></span>
                             <div>
                                 <h1 className='font-semibold'>Expiration date:</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
+                                <h1 className='text-gray-600'>{formateDate(deadline)}</h1>
                             </div>
                         </div>
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaLocationDot /></span>
                             <div>
                                 <h1 className='font-semibold'>Location:</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
+                                <h1 className='text-gray-600'>{location}</h1>
                             </div>
                         </div>
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
-                            <div>
-                                <h1 className='font-semibold'>Job Title:</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
-                            </div>
-                        </div>
-                        <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
-                            <div>
-                                <h1 className='font-semibold'>Salary Range:</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
-                            </div>
-                        </div>
-                        <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
-                            <div>
-                                <h1 className='font-semibold'>Category</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
-                            </div>
-                        </div>
-                        <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaUsers></FaUsers></span>
                             <div>
                                 <h1 className='font-semibold'>Total Applicant</h1>
-                                <h1 className='text-gray-600'>Posted 6 years ago</h1>
+                                <h1 className='text-gray-600'>{totalApplicant}</h1>
                             </div>
                         </div>
 
-                        <Button text='Apply Now'></Button>
+                        {/* <Button onclick={()=>handleClick(title)} text='Apply Now'></Button> */}
+                        <button
+                            onClick={() => setIsOpen(true)}
+                            className='relative btn group w-full bg-green-600'>
+                            <span className='absolute origin-left scale-x-0 inset-0 group-hover:scale-x-100 transition-transform duration-500 selection: bg-yelow-500'></span>
+                            <span className='relative z-10 text-white '>Apply </span>
+                        </button>
 
-
+                        <ApplyForJobModal
+                            job={job}
+                            isOpen={isOpen}
+                            closeModal={closeModal}></ApplyForJobModal>
                     </div>
 
 
@@ -110,70 +140,3 @@ const JobDetails = () => {
 };
 
 export default JobDetails;
-
-
-
-
-
-
-
-//   <div className='flex gap-8 bg-gray-400'>
-//                 <div className='w-2/3 min-h-screen p-4'>
-//                         <div className='border-red-500 border-2 h-full rounded-lg bg-gray-50 p-4'>
-//                             <p className='text-4xl '>Job banner dite hba </p>
-//                             <p>a Photo of who postedthe job </p>
-//                             <p>name and email of poster</p>
-//                             {/* dividerstart */}
-//                              <div className="divider"></div>
-//                              {/* divider end */}
-//                             <h1>Job title</h1>
-//                             <p>Job description</p>
-//                             <p>Skill need</p>
-//                         </div>
-//                 </div>
-//                 <div className='w-1/3 bg-blue-600 p-4'>
-//                     <div className='flex gap-4'>
-//                         <span>icon</span>
-//                         <div>
-//                             <h1>date posted</h1>
-//                             <h1>date</h1>
-//                         </div>
-//                     </div>
-//                     <div className='flex gap-4'>
-//                         <span>icon</span>
-//                         <div>
-//                             <h1>postingDate</h1>
-//                             <h1>date</h1>
-//                         </div>
-//                     </div>
-//                     <div className='flex gap-4'>
-//                         <span>icon</span>
-//                         <div>
-//                             <h1>applicationDeadline</h1>
-//                             <h1>date</h1>
-//                         </div>
-//                     </div>
-//                     <div className='flex gap-4'>
-//                         <span>icon</span>
-//                         <div>
-//                             <h1>Job Title</h1>
-//                             <h1>title</h1>
-//                         </div>
-//                     </div>
-//                     <div className='flex gap-4'>
-//                         <span>icon</span>
-//                         <div>
-//                             <h1>Salary range</h1>
-//                             <h1>title</h1>
-//                         </div>
-//                     </div>
-//                     <div className='flex gap-4'>
-//                         <span>icon</span>
-//                         <div>
-//                             <h1>Job Applicants Number </h1>
-//                             <h1>title</h1>
-//                         </div>
-//                     </div>
-//                     <Button text='Apply for job'></Button>
-//                 </div>
-//             </div>

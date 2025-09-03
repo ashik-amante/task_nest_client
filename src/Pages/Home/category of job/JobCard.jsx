@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import formateDate from '../../../Hooks/useFormateDate';
 
 const JobCard = ({job}) => {
-    const {title,buyerEmail,buyerName,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id} = job
+    const {title,buyerEmail,buyerName,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id,workMode} = job
     // console.log('job card',job);
     return (
         <div>
@@ -22,9 +22,9 @@ const JobCard = ({job}) => {
 
                     </h2>
                     {/* title */}
-                    <h2 className="card-title">
+                    <h2 className="card-title gap-2">
                         {title}
-                        <div className="badge badge-secondary">NEW</div>
+                        <div className="badge badge-secondary ">{workMode}</div>
                     </h2>
                     {/* date */}
                     <p>{formateDate(postingDate)}</p>
@@ -32,7 +32,7 @@ const JobCard = ({job}) => {
 
                     <div className="card-actions ">
                         <div className="badge badge-outline">$ {minPrice} - {maxPrice}</div>
-                        <div className="badge badge-outline">Applied  People :{totalApplicant}</div>
+                        <div className="badge badge-outline">Applied People : {totalApplicant}</div>
                     </div>
                     <div className="card-actions mt-3 ">
                         <Link 
