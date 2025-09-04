@@ -3,22 +3,22 @@ import { Link } from 'react-router-dom';
 import formateDate from '../../../Hooks/useFormateDate';
 
 const JobCard = ({job}) => {
-    const {title,buyerEmail,buyerName,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id,workMode} = job
+    const {title,buyer,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id,workMode} = job
     // console.log('job card',job);
     return (
         <div>
             <div className="card bg-base-100 h-96 shadow-xl">
                 <figure>
                     <img
-                        className='w-80 rounded'
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                        className='w-80 rounded-2xl'
+                        src={bannnerImage}
                         alt="Shoes" />
                 </figure>
                 <div className="card-body">
                     {/* name image */}
                     <h2 className="card-title">
-                        <p>{buyerName}</p>
-                        <img className='w-10 h-10 ml-2 rounded-full' src="https://i.ibb.co.com/nqkfNdbh/photo.jpg" alt="" />
+                        <p>{buyer.name}</p>
+                        <img className='w-10 h-10 ml-2 rounded-full' src={buyer.image} alt="" />
 
                     </h2>
                     {/* title */}
@@ -27,8 +27,8 @@ const JobCard = ({job}) => {
                         <div className="badge badge-secondary ">{workMode}</div>
                     </h2>
                     {/* date */}
-                    <p>{formateDate(postingDate)}</p>
-                    <p>{formateDate(deadline)}</p>
+                    <p>Posted Date: {formateDate(postingDate)}</p>
+                    <p>Deadline: <span className='font-semibold text-red-500 ml-2'>{formateDate(deadline)}</span></p>
 
                     <div className="card-actions ">
                         <div className="badge badge-outline">$ {minPrice} - {maxPrice}</div>

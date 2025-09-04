@@ -14,7 +14,7 @@ const image_hosting_Api = `https://api.imgbb.com/1/upload?key=${imageHosting_key
 const SignUp = () => {
     const navigate = useNavigate()
 
-    const { user, loading, createUser, updateUserProfile,setLoading,googleSignIn } = useAuth()
+    const {  loading, createUser, updateUserProfile,setLoading,googleSignIn } = useAuth()
 
     const {
         register,

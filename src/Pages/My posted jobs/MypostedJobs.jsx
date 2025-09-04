@@ -16,9 +16,10 @@ const MypostedJobs = () => {
     const axiosSecure = useAxiosSecure()
 
     const { data: jobs = [], refetch,isLoading} = useQuery({
-        queryKey: ['jobs'],
+        queryKey: ['jobs',user?.email],
+        enabled: !!user?.email,
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/jobs/${user?.email}`)
+            const { data } = await axiosSecure.get(`/jobs/myposted-jobs/${user?.email}`)
             return data
         }
     })

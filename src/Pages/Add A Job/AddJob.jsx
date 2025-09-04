@@ -7,40 +7,61 @@ import useAuth from "../../Hooks/useAuth";
 import Button from "../../Components/Button/Button";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { TbFidgetSpinner } from "react-icons/tb";
+
+
+const imageHosting_key = import.meta.env.VITE_IMAGE_API_KEY
+const image_hosting_Api = `https://api.imgbb.com/1/upload?key=${imageHosting_key}`
 
 const AddJob = () => {
     const axiosSecure = useAxiosSecure()
-    const {user} = useAuth()
+    const { user } = useAuth()
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    console.log(user);
+
 
     const { register, handleSubmit, control, formState: { errors } } = useForm()
 
     const onSubmit = async (data) => {
-        console.log(data)
+        setLoading(true)
+        const imageFile = { image: data.image[0] }
+
+        const response = await axios.post(image_hosting_Api, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+        console.log(response.data.data.display_url);
         const jobData = {
             title: data.title,
-            buyerEmail: user?.email,
-            buyerName: user?.displayName,
+            buyer: {
+                email: user?.email,
+                name: user?.displayName,
+                image: user?.photoURL
+            },
             postingDate: new Date(),
             deadline: data.deadline,
             category: data.category,
-            jobType:data.jobType,
+            jobType: data.jobType,
             minPrice: parseInt(data.minPrice),
             maxPrice: parseInt(data.maxPrice),
-            description:data.description,
-            location:data.location,
+            description: data.description,
+            location: data.location,
             workMode: data.workMode,
             totalApplicant: parseInt('0'),
-            bannnerImage: ''
+            bannnerImage: response.data.data.display_url
         }
+        console.log(jobData);
         try {
             const res = await axiosSecure.post('/jobs', jobData)
             console.log(res.data);
+            setLoading(false)
             toast.success('Job Added Successfully')
             navigate('/my-posted-jobs')
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
@@ -83,12 +104,27 @@ const AddJob = () => {
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />
                         </div>
+                        {/* image */}
+                        <div>
+                            <label htmlFor='image' className='block mb-2 text-sm'>
+                                Select Image:
+                            </label>
+                            <input
+                                {...register('image', { required: true })}
+
+                                type='file'
+                                id='image'
+                                name='image'
+                                accept='image/*'
+                            />
+                            {errors.image?.type === 'required' && <span className='text-red-600'> <br /> Please insert an image </span>}
+                        </div>
                         <div className='flex flex-col gap-2 '>
                             <label className='text-gray-700'>Deadline</label>
 
                             {/* Date Picker Input Field */}
                             <Controller
-                                {...register('deadline')}
+                                {...register('deadline', { required: true })}
                                 name="deadline"
                                 defaultValue={new Date()}
                                 control={control}
@@ -103,6 +139,7 @@ const AddJob = () => {
                             >
 
                             </Controller>
+                            {errors.deadline?.type === 'required' && <span className='text-red-600'> <br /> Please insert deadline </span>}
                         </div>
                         {/* category */}
                         <div className='flex flex-col gap-2 '>
@@ -203,10 +240,14 @@ const AddJob = () => {
                         ></textarea>
                     </div>
                     <div className='  mt-6'>
-                        {/* <button type="submit" className='px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600'>
-                            Add Job
-                        </button> */}
-                        <Button  text='Add to Job'></Button>
+                        <button
+                            disabled={loading}
+                            type="submit"
+                            className='px-8 py-2.5 leading-5 text-white w-full transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600'>
+                            {loading ? <TbFidgetSpinner className="animate-spin m-auto" /> : "Add Job"}
+
+                        </button>
+                        {/* <Button text='Add to Job'></Button> */}
                     </div>
                 </form>
             </section>

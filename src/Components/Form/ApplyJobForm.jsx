@@ -3,24 +3,22 @@ import useAuth from '../../Hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
-import useAllJob from '../../Hooks/useAllJob';
+// import useAllJob from '../../Hooks/useAllJob';
 import { useNavigate } from 'react-router-dom';
 
 const ApplyJobForm = ({closeModal,job}) => {
     const {user} = useAuth()
     const navigate = useNavigate()
     const axiosSecure = useAxiosSecure()
-    const [jobs,refetch] = useAllJob()
+    // const [jobs,refetch] = useAllJob()
     // job coming from props
     const {_id} = job
+    // console.log(job, 'props');
 
-    const previousJobData = jobs.filter(item=> item._id === _id)
-    console.log(previousJobData,'single job');
 
      const {
             register,
             handleSubmit,
-    
             formState: { errors },
         } = useForm()
 
@@ -30,43 +28,27 @@ const ApplyJobForm = ({closeModal,job}) => {
                 name:data.name,
                 email: data.email,
                 resume: data.resume,
-                description: data.description,
-                buyerEmail:job.buyerEmail,
-            }
+                jobId: _id,
+                buyer:{
+                    email:job.buyer.email,
+                    name:job.buyer.name,
+                },
+                title:job.title,
+                appliedDate: new Date()
 
+            }
+            console.log(applyData);
             try{
-                // added applicant info to database 
-                const res = await axiosSecure.post('/applications',applyData)
-                console.log(res.data);
-                toast.success('Applied successfully')
-               
-
-                if(res.data.insertedId){
-                    // update the previous job applicant number 
-                    
-                    const count = parseInt( previousJobData.map(item=>item.totalApplicant))
-                    console.log('count', count);
-                    const updatedJobData = {
-                        ...previousJobData,
-                        totalApplicant: parseInt(count+1),
-                        applicantEmail:data.email,
-                    }
-                    console.log(updatedJobData.totalApplicant,'updated job data');
-                    
-                    // removing _id from the final data
-                    const {_id, ...finalData} = updatedJobData
-                    const response = await axiosSecure.patch(`/jobs/update/${job._id}`, finalData)
-                    navigate('/applied-jobs')
-                    refetch()
-                    // queryClient.setQueryData(['applyJobs',_id], updatedJobData)
-                    console.log(response.data);
-                    toast.success('Total Applicant updated')
-                    closeModal()
-                }
+                const {data} = await axiosSecure.post('/applications', applyData)
+                console.log(data);
+                toast.success('Applied Successfully')
+                navigate('/applied-jobs')
             }catch(error){
-                toast.error(error.message)
-                console.log(error.message);
+                toast.error(error.response.data)
+                console.log(error);
             }
+
+            
         }
     return (
         <div className='w-full min-h-[calc(100vh-600px)] flex flex-col  text-gray-800 rounded-xl bg-gray-50'>

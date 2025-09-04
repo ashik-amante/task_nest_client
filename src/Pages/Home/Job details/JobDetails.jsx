@@ -10,12 +10,15 @@ import { MdTitle } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 
 import { FaLocationDot } from "react-icons/fa6";
+import useAuth from '../../../Hooks/useAuth';
 
 
 const JobDetails = () => {
     const [isOpen, setIsOpen] = useState(false)
     const job = useLoaderData()
-    const { title, buyerEmail, buyerName, deadline, category, postingDate, minPrice, maxPrice, description, location, totalApplicant, _id } = job
+    const {user} = useAuth()
+    const { title, buyer,bannnerImage, deadline, category, postingDate, minPrice, maxPrice, description, location, totalApplicant, _id } = job
+    // console.log(job , 'target');
 
     const closeModal = () => {
         setIsOpen(false)
@@ -32,12 +35,16 @@ const JobDetails = () => {
                     </h2>
 
                     <div className='flex justify-between mb-3'>
+                        <img className=' rounded w-full h-72' src={bannnerImage} alt="image" />
+                    </div>
+
+                    <div className='flex justify-between mb-3'>
                         <div className='space-y-1'>
-                            <p className='text-center font-semibold'>Posted By:</p>
-                            <p>Email: {buyerEmail} </p>
-                            <p>Name: {buyerName} </p>
+                            <p className='text-center font-semibold mb-2'>Buyer Info:</p>
+                            <p>Email: {buyer.email} </p>
+                            <p>Name: {buyer.name} </p>
                         </div>
-                        <img className='h-16 w-16 rounded-full' src="https://i.ibb.co.com/YFHSfFGg/6314122681770947455-removebg.png" alt="image" />
+                        <img className='h-16 w-16 rounded-full' src={buyer.image} alt="image" />
                     </div>
                     <div className="border-2 border-gray-400 "></div>
 
@@ -119,6 +126,7 @@ const JobDetails = () => {
 
                         {/* <Button onclick={()=>handleClick(title)} text='Apply Now'></Button> */}
                         <button
+                            
                             onClick={() => setIsOpen(true)}
                             className='relative btn group w-full bg-green-600'>
                             <span className='absolute origin-left scale-x-0 inset-0 group-hover:scale-x-100 transition-transform duration-500 selection: bg-yelow-500'></span>
