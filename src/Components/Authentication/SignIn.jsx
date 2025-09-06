@@ -7,11 +7,13 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import useAxiosPublc from '../../Hooks/useAxiosPublc';
 
 
 const SignIn = () => {
     const { loading, logIn, setLoading,googleSignIn } = useAuth()
     const navigate = useNavigate()
+    const axiosPublc = useAxiosPublc()
 
     const {
         register,
@@ -43,7 +45,11 @@ const SignIn = () => {
     // google sign in 
     const handleGoogleSignIn = async () => {
         setLoading(true)
-        await googleSignIn()
+        const result = await googleSignIn()
+        console.log(result.user);
+        const {data}  = await axiosPublc.post('/jwt', {email : result.user.email}, {withCredentials: true})
+        console.log(data);
+        
         navigate('/')
         toast.success('SignUp success')
         setLoading(false)

@@ -19,7 +19,7 @@ const MypostedJobs = () => {
         queryKey: ['jobs',user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/jobs/myposted-jobs/${user?.email}`)
+            const { data } = await axiosSecure.get(`/jobs/myposted-jobs/${user?.email}`, {withCredentials:true})
             return data
         }
     })
