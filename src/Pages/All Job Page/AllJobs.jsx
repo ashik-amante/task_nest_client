@@ -16,6 +16,7 @@ const AllJobs = () => {
     const [filter,setFilter] = useState('')
     const [sort,setSort] = useState('')
     const [search,setSearch] = useState('')
+    const [searchText,setSearchText] = useState('')
 
     //count tottal job
     const {data: count = 0} = useQuery({
@@ -45,13 +46,15 @@ const AllJobs = () => {
     const handleReset = ()=>{
         setFilter('')
         setSort('')
+        setSearch('')
+        setSearchText('')
         
     }
     // search
     const handleSubmit = e=>{
         e.preventDefault()
-        console.log(e.target.name);
-        setSearch(e.target.search.value)
+        
+        setSearch(searchText)
     }
 
     console.log(search);
@@ -87,6 +90,8 @@ const AllJobs = () => {
                                 className='px-6 py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent'
                                 type='text'
                                 name='search'
+                                onChange={e=>setSearchText(e.target.value)}
+                                value={searchText}
                                 placeholder='Enter Job Title'
                                 aria-label='Enter Job Title'
                             />
