@@ -16,9 +16,9 @@ import useAuth from '../../../Hooks/useAuth';
 const JobDetails = () => {
     const [isOpen, setIsOpen] = useState(false)
     const job = useLoaderData()
-    const {user} = useAuth()
-    const { title, buyer,bannnerImage, deadline, category, postingDate, minPrice, maxPrice, description, location, totalApplicant, _id } = job
-    // console.log(job , 'target');
+    const { user } = useAuth()
+    const { title, buyer, bannnerImage, deadline, category, postingDate, minPrice, maxPrice, description, location, totalApplicant, _id } = job
+    console.log(job, 'target');
 
     const closeModal = () => {
         setIsOpen(false)
@@ -55,17 +55,19 @@ const JobDetails = () => {
 
                     <div className='space-y-'>
                         <p className='text-center font-semibold'>Skill Needed:</p>
-                        <li>ttem11</li>
-                        <li>ttem21</li>
-                        <li>ttem31</li>
-                        <li>ttem41</li>
-                        <li>ttem51</li>
+                        <div className='px-10'>
+                            <li>ttem11</li>
+                            <li>ttem21</li>
+                            <li>ttem31</li>
+                            <li>ttem41</li>
+                            <li>ttem51</li>
+                        </div>
                     </div>
 
                 </section>
             </div>
             {/* Right side  */}
-            <div className='flex justify-center md:w-[40%] items-center min-h-screen my-12'>
+            <div className='flex flex-col md:flex-row justify-center px-8 md:w-[40%] items-center min-h-screen my-12 mr-12'>
                 <section className=' p-2 md:p-6 w-full min-h-screen mx-auto bg-white rounded-md shadow-md '>
                     <h2 className='text-2xl text-center mb-10 font-semibold text-gray-700 capitalize '>
                         Job Overview
@@ -87,7 +89,7 @@ const JobDetails = () => {
                                 <h1 className='font-semibold'>Category</h1>
                                 <h1 className='text-gray-600'>{category}</h1>
                             </div>
-                        </div>    
+                        </div>
                         <div className='flex gap-10'>
                             <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaDollarSign></FaDollarSign></span>
                             <div>
@@ -126,8 +128,9 @@ const JobDetails = () => {
 
                         {/* <Button onclick={()=>handleClick(title)} text='Apply Now'></Button> */}
                         <button
-                            
+
                             onClick={() => setIsOpen(true)}
+                            disabled={user?.email === buyer.email}
                             className='relative btn group w-full bg-green-600'>
                             <span className='absolute origin-left scale-x-0 inset-0 group-hover:scale-x-100 transition-transform duration-500 selection: bg-yelow-500'></span>
                             <span className='relative z-10 text-white '>Apply </span>

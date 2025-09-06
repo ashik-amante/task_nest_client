@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 
 const Banner = () => {
     return (
-        <div className='cover space-y-10 flex flex-col justify-center'>
+        <div className='cover space-y-10 flex flex-col justify-center p-4 md:px-20'>
             <div className='content '>
                 <h1 className='text-4xl text-white font-bold mb-3'>Find Job</h1>
                 <p className='text-2xl text-gray-300'>Hire Experts or be hired in sales & marketing|</p>

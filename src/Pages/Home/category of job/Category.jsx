@@ -18,9 +18,9 @@ const Category = () => {
 
     return (
         <div >
-            <h1 className='text-3xl text-center p-6
+            <h1 className='text-3xl text-center p-8
             '>Popular Job category</h1>
-            <div className='flex justify-center '>
+            <div className='flex justify-center px-6'>
                 <Tabs>
                     <TabList>
                         <Tab>All Job</Tab>

@@ -14,6 +14,7 @@ import UpdateJob from "../Pages/Update job/UpdateJob";
 import axios from "axios";
 import AppliedJobs from "../Pages/Applied Job/AppliedJobs";
 import PopUpmodal from "../Components/Modal/PopUpmodal";
+import Blog from "../Pages/Blog/Blog";
 
 
 const router = createBrowserRouter([
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
             {
               path: '/popup',
               element: <PopUpmodal></PopUpmodal>
+            },
+            {
+              path: '/my-blog',
+              element: <Blog></Blog>
             }
             
         ]

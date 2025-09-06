@@ -5,7 +5,7 @@ import Home from '../Pages/Home/Home/Home';
 
 const Main = () => {
     return (
-        <div>
+        <div className='max-w-7xl mx-auto'>
             {/* navbar */}
             <Navbar></Navbar>
             {/* outlet */}
