@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import useAuth from '../../../Hooks/useAuth';
 import { useEffect, useState } from 'react';
+import logo from '../../../../public/final.png'
 
 const Navbar = () => {
     const { user, logOut } = useAuth()
@@ -52,7 +53,7 @@ const Navbar = () => {
     </>
     return (
         <div>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-base-100 fixed z-10  bg-black text-white bg-opacity-60 rounded mx-auto max-w-7xl">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -71,11 +72,11 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            className={`menu ${theme === 'light' ? 'text-black' : 'text-white'}  menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow`}>
                             {navItems}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">Tusk Nest</a>
+                    <Link to='/' className="btn btn-ghost text-xl w-40"> <img src={logo} alt="" /></Link >
                 </div>
                 
                 {/* other part  */}

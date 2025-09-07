@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useLoaderData, useNavigate } from 'react-router-dom';
@@ -6,32 +6,60 @@ import useAuth from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Button from '../../Components/Button/Button';
 import DatePicker from 'react-datepicker';
+import axios from 'axios';
+import { TbFidgetSpinner } from 'react-icons/tb';
+
+const imageHosting_key = import.meta.env.VITE_IMAGE_API_KEY
+const image_hosting_Api = `https://api.imgbb.com/1/upload?key=${imageHosting_key}`
 
 const UpdateJob = () => {
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
     const navigate = useNavigate()
     const prevJob = useLoaderData()
+    const [processing,setProcessing] = useState(false)
     // console.log(prevJob);
     // console.log(user);
 
     const { register, handleSubmit, control, formState: { errors } } = useForm()
 
     const onSubmit = async (data) => {
+        setProcessing(true)
+        let bannerImage = prevJob.bannerImage
+        if(data.image && data.image.length > 0){
+            const imageFile = new FormData()
+            imageFile.append('image', data.image[0])
+            try{
+                const response = await axios.post(image_hosting_Api, imageFile, {
+                    headers: {
+                        "Content-Type": 'multipart/form-data'
+                    }
+                })
+                bannerImage = response.data.data.display_url
+            }catch(error){
+                console.log(error);
+                setProcessing(false)
+            }
+        }
+
         console.log(data)
         const updatedJob = {
-            ...data
+            ...data,
+            bannnerImage: bannerImage
         }
         // delete updatedJob._id
         // const {_id, ...finalJobData} = updatedJob
         try {
             const res = await axiosSecure.patch(`/jobs/update/${prevJob._id}`, updatedJob)
             console.log(res.data);
+            setProcessing(false)
             toast.success('Job Updated Successfully')
             navigate('/my-posted-jobs')
 
         } catch (error) {
             console.log(error);
+            toast.error('job update failed')
+            setProcessing(false)
         }
     }
 
@@ -74,6 +102,21 @@ const UpdateJob = () => {
 
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />
+                        </div>
+                         {/* image */}
+                        <div>
+                            <label htmlFor='image' className='block mb-2 text-sm'>
+                                Select Image:
+                            </label>
+                            <input
+                                {...register('image',  )}
+
+                                type='file'
+                                id='image'
+                                name='image'
+                                accept='image/*'
+                            />
+                           
                         </div>
                         <div className='flex flex-col gap-2 '>
                             <label className='text-gray-700'>Deadline</label>
@@ -202,10 +245,11 @@ const UpdateJob = () => {
                         ></textarea>
                     </div>
                     <div className='  mt-6'>
-                        {/* <button type="submit" className='px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600'>
-                                    Add Job
-                                </button> */}
-                        <Button text='Update Job'></Button>
+                        <button 
+                        type="submit" className='px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 w-full'>
+                                   {processing ? <TbFidgetSpinner className="animate-spin m-auto" /> : 'Update Job'}
+                                </button>
+                        
                     </div>
                 </form>
             </section>

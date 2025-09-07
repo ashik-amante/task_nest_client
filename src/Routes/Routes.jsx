@@ -15,12 +15,15 @@ import axios from "axios";
 import AppliedJobs from "../Pages/Applied Job/AppliedJobs";
 import PopUpmodal from "../Components/Modal/PopUpmodal";
 import Blog from "../Pages/Blog/Blog";
+import PrivateRoute from "./PrivateRoute";
+import ErrorPage from "../Components/Error page/ErrorPage";
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement:<ErrorPage></ErrorPage>,
         children: [
             {
               path: '/',
@@ -36,7 +39,7 @@ const router = createBrowserRouter([
             },
             {
               path:'/job-details/:id',
-              element: <JobDetails></JobDetails>,
+              element: <PrivateRoute><JobDetails></JobDetails></PrivateRoute>,
               loader: async ({params})=> {
                 const res = await axios.get(`http://localhost:5000/jobs/update/${params.id}`)
                 return res.data
@@ -48,15 +51,15 @@ const router = createBrowserRouter([
             },
             {
               path: '/add-job',
-              element:<AddJob></AddJob>
+              element:<PrivateRoute><AddJob></AddJob></PrivateRoute>
             },
             {
               path: '/my-posted-jobs',
-              element:<MypostedJobs></MypostedJobs>
+              element:<PrivateRoute><MypostedJobs></MypostedJobs></PrivateRoute>
             },
             {
               path: '/update-job/:id',
-              element: <UpdateJob></UpdateJob>,
+              element: <PrivateRoute><UpdateJob></UpdateJob></PrivateRoute>,
               loader:async ({params})=> {
                 const res = await axios.get(`http://localhost:5000/jobs/update/${params.id}`)
                 return res.data
@@ -64,7 +67,7 @@ const router = createBrowserRouter([
             },
             {
               path: '/applied-jobs',
-              element: <AppliedJobs></AppliedJobs>,
+              element: <PrivateRoute><AppliedJobs></AppliedJobs></PrivateRoute>,
               // loader:async ({params})=> {
               //   const res = await axios.get(`http://localhost:5000/jobs/update/${params.email}`)
               //   return res.data

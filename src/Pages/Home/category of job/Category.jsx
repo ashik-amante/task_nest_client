@@ -10,9 +10,9 @@ const Category = () => {
 
     // console.log(jobs);
 
-    const programming = jobs.filter(item => item.category === 'Programming & Tech')
+    const programming = jobs.filter(item => item.category === 'Programming Tech')
     const digital = jobs.filter(item => item.category === 'Digital Marketing')
-    const graphic = jobs.filter(item => item.category === 'Graphics & Design')
+    const graphic = jobs.filter(item => item.category === 'Graphics Design')
     const food = jobs.filter(item => item.category === 'Food Services')
 
 

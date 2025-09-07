@@ -7,9 +7,11 @@ const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth()
     const location = useLocation()
 
+    if (loading) return <LoadingSpinner></LoadingSpinner>
+
     if (user) return children
 
-    if (loading) return <LoadingSpinner></LoadingSpinner>
+    
 
     return <Navigate to='/signin' state={{ from: location }} ></Navigate>
 }

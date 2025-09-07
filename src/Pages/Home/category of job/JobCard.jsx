@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import formateDate from '../../../Hooks/useFormateDate';
 
 const JobCard = ({job}) => {
-    const {title,buyer,deadline,category,postingDate,jobType,minPrice,maxPrice,description,location,totalApplicant,bannnerImage,_id,workMode} = job
+    const {title,buyer,deadline,postingDate,minPrice,maxPrice,totalApplicant,bannnerImage,_id,workMode} = job
     // console.log('job card',job);
     return (
         <div>
-            <div className="card bg-base-100 h-96 shadow-xl">
+            <div className="card bg-base-100 h-96 shadow-xl hover:scale-105 transition-transform duration-500">
                 <figure>
                     <img
                         className='w-80 rounded-2xl'

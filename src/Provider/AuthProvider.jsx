@@ -10,7 +10,7 @@ const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 
 const AuthProvider = ({children}) => {
-    const [loading,setLoading] = useState(false)
+    const [loading,setLoading] = useState(true)
     const [user,setUser] = useState(null)
     const axiosPublc = useAxiosPublc()
 
@@ -49,15 +49,26 @@ const AuthProvider = ({children}) => {
     }
 
     useEffect(()=>{
-        const unsubscriber = onAuthStateChanged(auth, currentUser=>{
+        const unsubscriber = onAuthStateChanged(auth, async currentUser=>{
             setUser(currentUser)
+
+            if(currentUser?.email){
+                try{
+                    await axiosPublc.post('/jwt', {email: currentUser.email},{withCredentials:true})
+                }catch(error){
+                    console.log('jwt issue in auth provider',error);
+                }
+            }
+            else{
+                await axiosPublc.get('/logout', {withCredentials: true})
+            }
             setLoading(false)
         })
 
         return ()=>{
             unsubscriber()
         }
-    },[])
+    },[axiosPublc])
 
     const authInfo = {
         createUser,

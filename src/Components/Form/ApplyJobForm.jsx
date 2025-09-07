@@ -44,7 +44,7 @@ const ApplyJobForm = ({closeModal,job}) => {
                 toast.success('Applied Successfully')
                 navigate('/applied-jobs')
             }catch(error){
-                toast.error(error.response.data)
+                toast.error(error.response)
                 console.log(error);
             }
 

@@ -26,9 +26,9 @@ const JobDetails = () => {
 
     // console.log(job, 'from details page');
     return (
-        <div className='flex flex-col gap- md:flex-row md:gap-10 bg-gray-200 text-black'>
+        <div className='flex flex-col  md:flex-row md:gap-10 bg-gray-200 text-black'>
 
-            <div className='flex  items-center p-4  md:w-[60%] border-2 my-12'>
+            <div className='flex  items-center p-3 w-full  md:w-[60%] border-2 my-12'>
                 <section className=' p-2 md:p-6 w-full h-full mx-auto bg-white rounded-md shadow-md space-y-4 '>
                     <h2 className='text-2xl text-center mb-10 font-semibold text-gray-700 capitalize '>
                         Job Details
@@ -67,59 +67,65 @@ const JobDetails = () => {
                 </section>
             </div>
             {/* Right side  */}
-            <div className='flex flex-col md:flex-row justify-center px-8 md:w-[40%] items-center min-h-screen my-12 mr-12'>
-                <section className=' p-2 md:p-6 w-full min-h-screen mx-auto bg-white rounded-md shadow-md '>
+            <div className='flex flex-col md:flex-row justify-center px-3 w-full md:w-[40%] items-center min-h-screen my-12 mr-12'>
+                <section className=' p-2 md:p-4 w-full min-h-screen mx-auto bg-white rounded-md shadow-md '>
                     <h2 className='text-2xl text-center mb-10 font-semibold text-gray-700 capitalize '>
                         Job Overview
                     </h2>
 
-                    <div className='space-y-8 px-10  '>
+                    <div className='space-y-8 px-6 '>
 
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><MdTitle /></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 h-14'><MdTitle /></span>
                             <div>
                                 <h1 className='font-semibold'>Job Title:</h1>
                                 <h1 className='text-gray-600'>{title}</h1>
                             </div>
                         </div>
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><BiCategory />
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl h-14'><BiCategory />
                             </span>
                             <div>
                                 <h1 className='font-semibold'>Category</h1>
                                 <h1 className='text-gray-600'>{category}</h1>
                             </div>
                         </div>
+
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaDollarSign></FaDollarSign></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl h-14'><FcExpired></FcExpired></span>
+                            <div>
+                                <h1 className='font-semibold'>Expiration date:</h1>
+                                <h1 className='text-gray-600'>{formateDate(deadline)}</h1>
+                                <p>
+                                    {new Date(deadline) < new Date() && <span className='text-red-500 font-bold'>Expired</span>}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className='flex gap-10'>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl h-14'><FaDollarSign></FaDollarSign></span>
                             <div>
                                 <h1 className='font-semibold'>Salary Range:</h1>
                                 <h1 className='text-gray-600'> $ {minPrice} - {maxPrice}</h1>
                             </div>
                         </div>
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600'><FaCalendar></FaCalendar></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 h-14'><FaCalendar></FaCalendar></span>
                             <div>
                                 <h1 className='font-semibold'>Date Posted:</h1>
                                 <h1 className='text-gray-600'>{formateDate(postingDate)}</h1>
                             </div>
                         </div>
+
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FcExpired></FcExpired></span>
-                            <div>
-                                <h1 className='font-semibold'>Expiration date:</h1>
-                                <h1 className='text-gray-600'>{formateDate(deadline)}</h1>
-                            </div>
-                        </div>
-                        <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaLocationDot /></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 h-14 text-2xl '><FaLocationDot /></span>
                             <div>
                                 <h1 className='font-semibold'>Location:</h1>
                                 <h1 className='text-gray-600'>{location}</h1>
                             </div>
                         </div>
                         <div className='flex gap-10'>
-                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl'><FaUsers></FaUsers></span>
+                            <span className='bg-green-100 p-3 rounded text-green-600 text-2xl h-14'><FaUsers></FaUsers></span>
                             <div>
                                 <h1 className='font-semibold'>Total Applicant</h1>
                                 <h1 className='text-gray-600'>{totalApplicant}</h1>
@@ -130,10 +136,12 @@ const JobDetails = () => {
                         <button
 
                             onClick={() => setIsOpen(true)}
-                            disabled={user?.email === buyer.email}
+                            disabled={user?.email === buyer.email || new Date(deadline) < new Date()}
                             className='relative btn group w-full bg-green-600'>
                             <span className='absolute origin-left scale-x-0 inset-0 group-hover:scale-x-100 transition-transform duration-500 selection: bg-yelow-500'></span>
-                            <span className='relative z-10 text-white '>Apply </span>
+                            <span className='relative z-10 text-white '>
+                                { new Date(deadline) < new Date() ? 'Deadline Expired': 'Apply'}
+                            </span>
                         </button>
 
                         <ApplyForJobModal

@@ -11,7 +11,7 @@ import useAxiosPublc from '../../Hooks/useAxiosPublc';
 
 
 const SignIn = () => {
-    const { loading, logIn, setLoading,googleSignIn } = useAuth()
+    const { loading, logIn, setLoading,googleSignIn,user } = useAuth()
     const navigate = useNavigate()
     const axiosPublc = useAxiosPublc()
 
@@ -54,6 +54,7 @@ const SignIn = () => {
         toast.success('SignUp success')
         setLoading(false)
     }
+   
     return (
         <div className='flex justify-center items-center min-h-[calc(100vh-306px)] mt-10'>
             <div className='flex flex-col lg:flex-row w-full max-w-full mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>

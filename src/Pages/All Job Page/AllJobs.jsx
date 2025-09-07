@@ -5,32 +5,34 @@ import { data, Link } from 'react-router-dom';
 import formateDate from '../../Hooks/useFormateDate';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import LoadingSpinner from '../../Components/Shareed/LoadingSpinner';
 
 
 const AllJobs = () => {
-    const [jobs,] = useAllJob()
+    const [jobs,, isLoading] = useAllJob()
     console.log('all jobs ', jobs);
     const axiosSecure = useAxiosSecure()
-    const [itemPerpage, setItemPerpage] = useState(3)
+    const [itemPerpage, setItemPerpage] = useState(8)
     const [currentPage, setCurrentPage] = useState(1)
     const [filter,setFilter] = useState('')
     const [sort,setSort] = useState('')
     const [search,setSearch] = useState('')
     const [searchText,setSearchText] = useState('')
+    const [mode , setMode] = useState('')
 
     //count tottal job
     const {data: count = 0} = useQuery({
-        queryKey:['count',filter,search],
+        queryKey:['count',filter,search,mode],
         queryFn: async ()=>{
-            const {data} = await axiosSecure.get(`/jobs-count?filter=${filter}&search=${search}`)
+            const {data} = await axiosSecure.get(`/jobs-count?filter=${filter}&search=${search}&mode=${mode}`)
             return data.count
         }
     })
     // pagination data 
      const {data: allJobs =[]} = useQuery({
-        queryKey:['allJobs',currentPage,filter,itemPerpage,sort,search],
+        queryKey:['allJobs',currentPage,filter,itemPerpage,sort,search,mode],
         queryFn: async ()=>{
-            const {data} = await axiosSecure.get(`/all-jobs?page=${currentPage}&size=${itemPerpage}&filter=${filter}&sort=${sort}&search=${search}`)
+            const {data} = await axiosSecure.get(`/all-jobs?page=${currentPage}&size=${itemPerpage}&filter=${filter}&sort=${sort}&search=${search}&mode=${mode}`)
             return data
         }
     })
@@ -48,6 +50,7 @@ const AllJobs = () => {
         setSort('')
         setSearch('')
         setSearchText('')
+        setMode('')
         
     }
     // search
@@ -60,9 +63,11 @@ const AllJobs = () => {
     console.log(search);
 
     const pages = [...Array(totalPages).keys().map(item => item + 1)]
+
+    if(isLoading) return <LoadingSpinner></LoadingSpinner>
    
     return (
-        <div className='container px-6 py-10 mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between'>
+        <div className='container px-6 mt-20 mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between mb-10'>
             <div>
                 <div className='flex flex-col md:flex-row justify-center items-center gap-5 '>
                     <div>
@@ -81,6 +86,24 @@ const AllJobs = () => {
                             <option value='Graphics Design'>Graphics Design</option>
                             <option value='Digital Marketing'>Digital Marketing</option>
                             <option value='Food Services'>Food Service</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select
+                        onChange={e=>{
+                            setMode(e.target.value)
+                            setCurrentPage(1)
+                        }}
+                            name='mode'
+                            value={mode}
+
+                            id='sort'
+                            className='border p-4 rounded-lg'
+                        >
+                            <option value=''>Filter By Workmode</option>
+                            <option value='Onsite'>Onsite</option>
+                            <option value='Remote'>Remote</option>   
+                            <option value='Hybrid'>Hybrid</option>
                         </select>
                     </div>
 
@@ -153,7 +176,7 @@ const AllJobs = () => {
                                         <td>{formateDate(job.deadline)}</td>
                                         <td>$ {job.minPrice} - {job.maxPrice}</td>
                                         <td>
-                                            <Link to={`/job-details/${job.id}`}>
+                                            <Link to={`/job-details/${job._id}`}>
                                                 <Button text='Details'></Button>
                                             </Link>
                                         </td>
