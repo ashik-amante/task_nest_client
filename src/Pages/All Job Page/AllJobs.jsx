@@ -81,7 +81,7 @@ const AllJobs = () => {
                             id='sort'
                             className='border p-4 rounded-lg'
                         >
-                            <option value=''>Filter By Category</option>
+                            <option value=''>Category</option>
                             <option value='Programming Tech'>Programming & Tech</option>
                             <option value='Graphics Design'>Graphics Design</option>
                             <option value='Digital Marketing'>Digital Marketing</option>
@@ -100,7 +100,7 @@ const AllJobs = () => {
                             id='sort'
                             className='border p-4 rounded-lg'
                         >
-                            <option value=''>Filter By Workmode</option>
+                            <option value=''> Workmode</option>
                             <option value='Onsite'>Onsite</option>
                             <option value='Remote'>Remote</option>   
                             <option value='Hybrid'>Hybrid</option>
@@ -110,7 +110,7 @@ const AllJobs = () => {
                     <form onSubmit={handleSubmit}>
                         <div className='flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300'>
                             <input
-                                className='px-6 py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent'
+                                className='px-2 py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent'
                                 type='text'
                                 name='search'
                                 onChange={e=>setSearchText(e.target.value)}
@@ -173,7 +173,7 @@ const AllJobs = () => {
                                         
                                         <td>{job.title}</td>
                                         <td>{formateDate(job.postingDate)}</td>
-                                        <td>{formateDate(job.deadline)}</td>
+                                        <td className={`${new Date(job.deadline) < new Date() && 'text-red-600'}`}>{formateDate(job.deadline)}</td>
                                         <td>$ {job.minPrice} - {job.maxPrice}</td>
                                         <td>
                                             <Link to={`/job-details/${job._id}`}>

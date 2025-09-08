@@ -17,6 +17,7 @@ import PopUpmodal from "../Components/Modal/PopUpmodal";
 import Blog from "../Pages/Blog/Blog";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../Components/Error page/ErrorPage";
+import FullBlog from "../Pages/Blog/FullBlog";
 
 
 const router = createBrowserRouter([
@@ -80,6 +81,14 @@ const router = createBrowserRouter([
             {
               path: '/my-blog',
               element: <Blog></Blog>
+            },
+            {
+              path: '/full-blog/:id',
+              element: <FullBlog></FullBlog>,
+              loader: async ({params})=> {
+                const res = await axios.get(`http://localhost:5000/blogs/${params.id}`)
+                return res.data
+              }
             }
             
         ]

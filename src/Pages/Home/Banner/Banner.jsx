@@ -1,6 +1,7 @@
 import React from 'react';
 import './banner.css'
 import { FaSearch } from "react-icons/fa";
+import { Typewriter } from 'react-simple-typewriter'
 
 
 const Banner = () => {
@@ -8,12 +9,26 @@ const Banner = () => {
         <div className='cover space-y-10 flex flex-col justify-center p-4 md:px-20'>
             <div className='content '>
                 <h1 className='text-4xl text-white font-bold mb-3'>Find Job</h1>
-                <p className='text-2xl text-gray-300'>Hire Experts or be hired in sales & marketing|</p>
+                <p className='text-2xl text-gray-300'>Hire Experts or <span className='text-[#00df9a] font-semibold'>
+                    <Typewriter
+                        words={["Be Hired", 'Work Remotely', 'Grow in Sales & Marketing']}
+                        loop={0}
+                        cursor
+                        cursorStyle='|'
+                        typeSpeed={70}
+                        deleteSpeed={50}
+                        delaySpeed={1000}
+                    ></Typewriter>
+                </span> </p>
                 <button className='btn bg-transparent text-white text-xl mt-10'>What are you looking for?</button>
             </div>
             <div>
                 <label className="input input-bordered flex items-center gap-2 w-1/2 h-14">
-                    <input type="text" className="grow" placeholder="Search" />
+                    <input
+                        type="text"
+                        className="grow"
+
+                        placeholder="Search" />
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16"
