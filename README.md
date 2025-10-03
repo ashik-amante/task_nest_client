@@ -1,15 +1,13 @@
-# React + Vite
 
-Live site : https://tasknest-ccb72.web.app
 
 
 # JobSphere – Job Seeking Platform  
 
 A modern **job-seeking web application** where users can post, search, and apply for jobs seamlessly. The platform supports multiple job categories, a responsive design, and smooth user experience with authentication and private routes features.  
 
-🚀 **Live Site URL:** [https://tasknest-ccb72.web.app]  
-📂 **Client Repo:** [https://github.com/ashik-amante/task_nest_client]  
-📂 **Server Repo:** [https://github.com/ashik-amante/task_nest_server]  
+ **Live Site URL:** [https://tasknest-ccb72.web.app]  
+ **Client Repo:** [https://github.com/ashik-amante/task_nest_client]  
+ **Server Repo:** [https://github.com/ashik-amante/task_nest_server]  
 
 ---
 
