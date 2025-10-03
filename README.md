@@ -1,7 +1,7 @@
 
 
 
-# JobSphere – Job Seeking Platform  
+# TaskNest – Job Seeking Platform  
 
 A modern **job-seeking web application** where users can post, search, and apply for jobs seamlessly. The platform supports multiple job categories, a responsive design, and smooth user experience with authentication and private routes features.  
 
