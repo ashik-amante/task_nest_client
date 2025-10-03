@@ -14,11 +14,11 @@ A modern **job-seeking web application** where users can post, search, and apply
 ##  Features  
 
 -  **Browse & Filter Jobs** – Users can explore jobs by category:  
-  - On-Site Jobs  
-  - Remote Jobs  
-  - Hybrid Jobs  
-  - Part-Time Jobs  
-  - All Jobs (combined view)  
+  - Category (Types of jobs)  
+  - WorkMode (onsite,hybrid,remote)  
+  - Search by job title  
+  - Sort by deadline 
+  -  
 
 -  **Job Management System**  
   - Add new jobs with detailed info  
@@ -79,14 +79,7 @@ A modern **job-seeking web application** where users can post, search, and apply
 
 - **My Jobs (Private)**  
   - View all posted jobs  
-  - Update/Delete functionality with confirmation  
-
-- **Applied Jobs (Private)**  
-  - Filter by job category  
-  - Download summary as PDF (React-to-Pdf)  
-
-- **Blogs Page**  
-  - Technical answers about access/refresh tokens, Express.js, NestJS  
+  - Update/Delete functionality with confirmation   
 
 - **Authentication Pages**  
   - Login (Email/Password, Google)  
@@ -126,26 +119,4 @@ npm run dev
 - **Frontend (Client):** Firebase Hosting  
 - **Backend (Server):** Vercel  
 
----
-
-##  Extra Features (Challenging & Optional Tasks Implemented)  
-
-- TanStack Query for fetching data  
-- Dark/Light theme toggle  
-- Framer Motion animations  
-- JWT authentication for protected routes   
-- Search & filter system   
-
----
-
-##  Author  
-
-**Abdullah Al Ashik**  
-- [LinkedIn](#)  
-- [GitHub](#)  
-- [Portfolio](#)  
- 
-
----
-
-✨ *No Pain, No Gain. The most beautiful moments in life come after going through hardships and challenges.*  
+---  
